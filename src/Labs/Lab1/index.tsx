@@ -148,7 +148,7 @@ export default function Lab1() {
         <h4>Image tag</h4>
         Loading an image from the internet:
         <br />
-        <img id="wd-starship"
+        <img alt="" id="wd-starship"
           width="400px"
         src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
         />
