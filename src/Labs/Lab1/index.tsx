@@ -155,7 +155,7 @@ export default function Lab1() {
         <br />
         Loading a local image:
         <br />
-        <img id="wd-teslabot" src="images/pirate.png" height="200px" />
+        <img id="wd-teslabot" src="images/pirate.png" height="200px" alt="pirateimg" />
       </div>
 
       <div id="wd-forms">
