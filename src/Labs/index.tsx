@@ -7,8 +7,10 @@ export default function Labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
+      <h1>Jayden Ngo</h1>
       <TOC />
       <Routes>
+        <a href="https://github.com/23jango?tab=repositories" id="wd-github" target="_blank" rel="noreferrer">githublink</a><br/>
         <Route path="/" element={<Navigate to="Lab1" />} />
         <Route path="Lab1" element={<Lab1 />} />
         <Route path="Lab2" element={<Lab2 />} />
