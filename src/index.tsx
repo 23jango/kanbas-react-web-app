@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './index.css'; //so we can see the raw html
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import './index.css'; //so we can see the raw html
+import "bootstrap/dist/css/bootstrap.min.css";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
