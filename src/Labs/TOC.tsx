@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 export default function TOC() {
-  const location = useLocation(); // Get the current location object
-  const pathname = location.pathname; // Extract the pathname
+  // const location = useLocation(); // Get the current location object
+  // const pathname = location.pathname; // Extract the pathname
+  const { pathname } = useLocation();
   return (
     <ul className="nav nav-pills">
       <li className="nav-item">
