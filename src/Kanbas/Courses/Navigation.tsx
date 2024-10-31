@@ -6,12 +6,12 @@ export default function CoursesNavigation() {
   const { cid } = useParams();
   const { pathname } = useLocation();
   const course = courses.find((course) => course._id === cid);
-  // const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
+ 
   const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
 
   // to fix the 'course possibly not defined' error
   if (!course) {
-    return <div>Course not found</div>; // Return error if course is not found
+    return <p>Course not found</p>; // Return error if course is not found
   }
 
   return (

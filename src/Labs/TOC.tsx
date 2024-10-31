@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 export default function TOC() {
-  // const location = useLocation(); // Get the current location object
-  // const pathname = location.pathname; // Extract the pathname
   const { pathname } = useLocation();
   return (
     <ul className="nav nav-pills">
@@ -29,6 +27,14 @@ export default function TOC() {
           Lab 3
         </a>
       </li>
+
+      <li className="nav-item">
+        <a id="wd-a4" href="#/Labs/Lab4"
+          className={`nav-link ${pathname.includes("Lab4") ? "active" : ""}`}>
+          Lab 4
+        </a>
+      </li>
+
       <li className="nav-item">
         <a id="wd-k" href="#/Kanbas" className="nav-link">
           Kanbas

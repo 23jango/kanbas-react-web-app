@@ -1,11 +1,30 @@
 [
-  { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101" },
+  { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101","startDate": "2023-01-10",
+  "endDate": "2023-05-15", "description": "This course provides an in-depth study of the fundamentals of rocket propulsion, covering topics such as propulsion theory, engine types, fuel chemistry, and the practical applications of rocket technology. Designed for students with a strong background in physics and engineering, the course includes both theoretical instruction and hands-on laboratory work", "credits": 4 },
+
+
   { "_id": "A102", "title": "Combustion Analysis", "course": "RS101" },
+
+
   { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101" },
-  { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102" },
+
+
+  { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102", "startDate": "2023-01-10",
+  "endDate": "2023-05-15", "description": "This course offers a comprehensive exploration of aerodynamics, focusing on the principles and applications of airflow and its effects on flying objects. Topics include fluid dynamics, airfoil design, lift and drag forces, and the aerodynamic considerations in aircraft design. The course blends theoretical learning with practical applications, suitable for students pursuing a career in aeronautics or astronautics engineering.", "credits": 3},
+
+
   { "_id": "A202", "title": "Flow Analysis", "course": "RS102" },
+
+
   { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
-  { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
+
+
+  { "_id": "A301", "title": "Structural Design Task", "course": "RS103", "startDate": "2023-01-10",
+  "endDate": "2023-05-15", "description": "This course delves into the principles and practices of spacecraft design, offering students a detailed understanding of the engineering and technology behind spacecraft systems. Key topics include spacecraft structure, propulsion, power systems, thermal control, and payload integration. Emphasizing both theoretical concepts and practical skills, the course prepares students for careers in the space industry, with a focus on innovative design and problem-solving in the context of current and future space missions", "credits": 4},
+
+
   { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
+
+
   { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
 ]

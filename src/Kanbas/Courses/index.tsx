@@ -6,8 +6,8 @@ import AssignmentEditor from "./Assignments/Editor";
 import Table from "./People/Table";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
-import { courses } from "../Database";
-export default function Courses() {
+// import { courses } from "../Database"; //dont load from database, just accept from kanbas
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
