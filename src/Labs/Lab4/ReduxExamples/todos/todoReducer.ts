@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import TodoForm from "./TodoForm";
 const initialState = {
   // declare initial state of reducer
   todos: [
@@ -29,7 +30,6 @@ const todosSlice = createSlice({ //creating the slice
     updateTodo: (state, action) => { // rebuilding newTodos by replacing
       // old todo with new todo in
       // action.payload
-      
       const newTodos = state.todos.map((item) =>
         item.id === action.payload.id ? action.payload : item
       );

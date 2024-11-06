@@ -16,6 +16,7 @@ import CounterRedux from "./ReduxExamples/CounterRedux";
 import AddRedux from "./ReduxExamples/AddRedux";
 
 import TodoList from "./ReduxExamples/todos/TodoList";
+import TodoForm from "./ReduxExamples/todos/TodoForm";
 
 
 export default function Lab4() {

@@ -14,7 +14,7 @@ export default function TodoList() {
         <TodoForm /> 
         {/* remove unnecessary attributes */}
         {todos.map((todo: any) => (
-          <TodoItem todo={todo} />
+          <TodoItem todo={todo} />        
           // remove unnecessary attributes,
           // but still pass the todo
         ))}

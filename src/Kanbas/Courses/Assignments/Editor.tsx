@@ -1,270 +1,294 @@
-import { useParams } from "react-router";
 import * as db from "../../Database";
+import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
-  const { cid } = useParams();
+  const { aid, cid } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
 
-  const editor = db.courses;
+  const existingAssignment =
+    aid !== "new" ? assignments.find((a: any) => a._id === aid) : null;
+
+  const [assignment, setAssignment] = useState({
+    title: existingAssignment?.title || "",
+    description: existingAssignment?.description || "",
+    points: existingAssignment?.points || 100,
+    dueDate: existingAssignment?.dueDate || "",
+    startDate: existingAssignment?.available || "",
+    endDate: existingAssignment?.endDate || "",
+  });
+
+  const handleSave = () => {
+    if (aid === "new") {
+      dispatch(addAssignment({ ...assignment, course: cid }));
+    } else {
+      dispatch(
+        updateAssignment({
+          _id: aid,
+          title: assignment.title,
+          description: assignment.description,
+          points: assignment.points,
+          due: assignment.dueDate,
+          available: assignment.startDate,
+          end: assignment.endDate,
+        })
+      );
+    }
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
+  };
 
   return (
     <div id="wd-assignments-editor" className="container mt-4">
-      {editor
-        .filter((editor: any) => editor._id === cid)
-        .map((editor: any) => (
-          <div className="w-100" key={editor._id}>
-            {/* first box */}
-            <label htmlFor="wd-name">Assignment Name</label>
-            {/* clicking this label */}
-            <br />
-            <input
-              className="w-100 form-control"
-              id="wd-name"
-              value={editor.name}
-            />
-            <br />
-            <br />
-            {/* selects this field */}
-
-            {/* description */}
-            <textarea
-              className="form-control mb-4 d-flex flex-row"
-              id="wd-description"
-            >
-              {editor.description}
-            </textarea>
-            <br />
-
-            <form>
-              {/* Points and Assignment Group */}
+      <form>
+        {assignment && (
+          <div className="w-100">
+            <div className="mb-3">
+              <label htmlFor="wd-name" className="form-label">
+                Assignment Name
+              </label>
+              <br />
+              <input
+                id="wd-name"
+                type="text"
+                className="form-control"
+                value={assignment.title}
+                onChange={(e) =>
+                  setAssignment({ ...assignment, title: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <textarea
+                id="wd-description"
+                className="form-control mb-4"
+                value={assignment.description}
+                onChange={(e) =>
+                  setAssignment({ ...assignment, description: e.target.value })
+                }
+              ></textarea>
+            </div>
+            <div className="d-flex flex-column">
               <div className="d-flex text-nowrap flex-row mb-3">
-                <label htmlFor="wd-points" className="col-sm-2 col-form-label">
+                <label htmlFor="wd-points" className="form-label me-3 w-25">
                   Points
                 </label>
                 <input
-                  type="number"
                   id="wd-points"
+                  type="number"
                   className="form-control"
-                  value={editor.credits}
+                  value={assignment.points}
+                  onChange={(e) =>
+                    setAssignment({
+                      ...assignment,
+                      points: parseInt(e.target.value),
+                    })
+                  }
                 />
               </div>
+
               <div className="d-flex text-nowrap flex-row mb-3">
-                <label htmlFor="wd-group" className="col-sm-2 col-form-label">
+                <label htmlFor="wd-group" className="form-label me-3 w-25">
                   Assignment Group
                 </label>
-                <select id="wd-group" className="form-control">
-                  <option value="Assignment" selected>
-                    ASSIGNMENTS
-                  </option>
-                  <option value="exam">EXAM</option>
-                  <option value="quiz">QUIZ</option>
+                <select id="wd-group" className="form-select">
+                  <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                 </select>
               </div>
-
-              {/* Display Grade as and Submission Type */}
               <div className="d-flex text-nowrap flex-row mb-3">
                 <label
                   htmlFor="wd-display-grade-as"
-                  className="col-sm-2 col-form-label"
+                  className="form-label me-3 w-25"
                 >
                   Display Grade as
                 </label>
-                <select id="wd-display-grade-as" className="form-control">
-                  <option value="Percentage" selected>
-                    Percentage
-                  </option>
-                  <option value="other">Other</option>
-                  <option value="another">Another</option>
+                <select id="wd-display-grade-as" className="form-select">
+                  <option value="submission">Percentage</option>
                 </select>
               </div>
 
-              {/* submission and options box */}
               <div className="d-flex text-nowrap flex-row mb-3">
-                <label
-                  htmlFor="wd-submission-type"
-                  className="form-label me-3 w-25"
-                >
+                <label htmlFor="wd-submission" className="form-label me-3 w-25">
                   Submission Type
                 </label>
                 <div className="rounded-box mb-3 p-3 w-100">
-                  <div className="d-flex text-nowrap flex-row mb-3">
-                    {/* div to make everything inside box */}
-                    <div className="rounded-box mb-3 p-3 w-100">
-                      {/* so the online box can be neatly in the box w margins and padding */}
-                      <select id="wd-submission-type" className="form-control">
-                        <option value="online" selected>
-                          Online
-                        </option>
-                        <option value="gradescope">Gradescope</option>
-                        <option value="in person">In Person</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Online Entry Options */}
+                  <label
+                    htmlFor="wd-submission-type"
+                    className="form-label me-3"
+                  >
+                    Submission Type
+                  </label>
+                  <select id="wd-submission-type" className="form-select">
+                    <option value="submission-type">Online</option>
+                  </select>
+                  <label
+                    htmlFor="wd-online-entry-options"
+                    className="form-label mt-3"
+                  >
+                    <b>Online Entry Options</b>
+                  </label>
                   <div className="mt-2">
-                    <div className="form-label mt-3">
-                      <label>
-                        <b>Online Entry Options:</b>
+                    <div className="form-check">
+                      <input
+                        className="wd-text-entry form-check-input"
+                        type="checkbox"
+                        id="text-entry"
+                      />
+                      <label
+                        className="wd-text-entry form-check-label"
+                        htmlFor="text-entry"
+                      >
+                        Text Entry
                       </label>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="wd-text-entry"
-                        />
-                        <label
-                          htmlFor="wd-text-entry"
-                          className="form-check-label"
-                        >
-                          Text Entry
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="wd-website-url"
-                          checked
-                        />
-                        <label
-                          htmlFor="wd-website-url"
-                          className="form-check-label"
-                        >
-                          Website URL
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="wd-media-recordings"
-                        />
-                        <label
-                          htmlFor="wd-media-recordings"
-                          className="form-check-label"
-                        >
-                          Media Recordings
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="wd-student-annotation"
-                        />
-                        <label
-                          htmlFor="wd-student-annotation"
-                          className="form-check-label"
-                        >
-                          Student Annotation
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="wd-file-upload"
-                        />
-                        <label
-                          htmlFor="wd-file-upload"
-                          className="form-check-label"
-                        >
-                          File Upload
-                        </label>
-                      </div>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="wd-website-url form-check-input"
+                        type="checkbox"
+                        id="website-url"
+                        checked
+                      />
+                      <label
+                        className="wd-website-url form-check-label"
+                        htmlFor="website-url"
+                      >
+                        Website URL
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="wd-media-recordings form-check-input"
+                        type="checkbox"
+                        id="media-recordings"
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="media-recordings"
+                      >
+                        Media Recordings
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="wd-student-annotation form-check-input"
+                        type="checkbox"
+                        id="student-annotation"
+                      />
+                      <label
+                        className="wd-student-annotation form-check-label"
+                        htmlFor="student-annotation"
+                      >
+                        Student Annotation
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="wd-file-upload form-check-input"
+                        type="checkbox"
+                        id="file-uploads"
+                      />
+                      <label
+                        className="wd-file-upload form-check-label"
+                        htmlFor="file-uploads"
+                      >
+                        File Uploads
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* assign to box */}
               <div className="d-flex text-nowrap flex-row mb-3">
-                <label htmlFor="wd-assign" className="form-label me-3 w-25">
-                  Assign
+                <label htmlFor="wd-assign-to" className="form-label me-3 w-25">
+                  Assign to
                 </label>
                 <div className="rounded-box mb-3 p-3 w-100">
-                  {/* Assign to */}
-                  <div className="col-sm-10">
-                    <div className="form-group row">
+                  <div className="row mt-3">
+                    <div className="col">
                       <label
-                        htmlFor="wd-assign-to"
-                        className="col-sm-2 col-form-label"
-                      >
-                        <b>Assign to</b>
-                      </label>
-                      <input
-                        type="text"
-                        id="wd-assign-to"
-                        className="form-control"
-                        value="Everyone"
-                      />
-                    </div>
-
-                    {/* Due Date and Availability */}
-                    <div className="form-group row">
-                      <label
-                        htmlFor="wd-due-date"
-                        className="col-sm-2 col-form-label"
+                        htmlFor="due-date"
+                        className="wd-due-date form-label"
                       >
                         <b>Due</b>
                       </label>
                       <input
                         type="date"
-                        id="wd-due-date"
-                        className="form-control"
-                        value={editor.endDate}
+                        className="wd-due-date form-control"
+                        id="due-date"
+                        value={assignment.dueDate}
+                        onChange={(e) =>
+                          setAssignment({
+                            ...assignment,
+                            dueDate: e.target.value,
+                          })
+                        }
                       />
                     </div>
-                    <div className="row mt-3">
-                      {/* wrap it in a col so the avail and until can be in the same row */}
-                      <div className="col">
-                        <label
-                          htmlFor="wd-available-from"
-                          className="form-label"
-                        >
-                          <b>Available from</b>
-                        </label>
-                        <input
-                          type="date"
-                          id="wd-available-from"
-                          className="form-control"
-                          value={editor.startDate}
-                        />
-                      </div>
-                      <div className="col">
-                        <label
-                          htmlFor="wd-available-until"
-                          className="form-label"
-                        >
-                          <b>Until</b>
-                        </label>
-                        <input
-                          type="date"
-                          id="wd-available-until"
-                          className="form-control"
-                          value={editor.endDate}
-                        />
-                      </div>
+                  </div>
+                  <div className="row mt-3">
+                    <div className="col">
+                      <label
+                        htmlFor="available-from"
+                        className="wd-available-from form-label"
+                      >
+                        <b>Available from</b>
+                      </label>
+                      <input
+                        type="date"
+                        className="wd-available-from form-control"
+                        id="available-from"
+                        value={assignment.startDate}
+                        onChange={(e) =>
+                          setAssignment({
+                            ...assignment,
+                            startDate: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        htmlFor="until"
+                        className="wd-available-until form-label"
+                      >
+                        <b>Until</b>
+                      </label>
+                      <input
+                        type="date"
+                        className="wd-available-until form-control"
+                        id="until"
+                        value={assignment.endDate}
+                        onChange={(e) =>
+                          setAssignment({
+                            ...assignment,
+                            endDate: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Save/Cancel Buttons */}
-              <div className="row mb-3 float-end me-5">
-                <div className="col-sm-12">
-                  <button id="wd-cancel" type="button" className="btn btn-secondary">
-                    Cancel
-                  </button>
-                  <button id="wd-save" type="button" className="btn btn-danger">
-                    Save
-                  </button>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
-        ))}
+        )}
+        <div className="d-flex justify-content-end">
+          <button
+            onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments`)}
+            className="btn btn-secondary me-2"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button onClick={handleSave} type="button" className="btn btn-danger">
+            Save
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
-

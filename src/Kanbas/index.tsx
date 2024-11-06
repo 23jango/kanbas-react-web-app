@@ -6,6 +6,7 @@ import Courses from "./Courses";
 import "./style.css";
 import * as db from "./Database";
 import { useState } from "react";
+import ProtectedRoute from "./Account/ProtectedRoute";
 
 export default function Kanbas() {
 
@@ -22,11 +23,11 @@ export default function Kanbas() {
   // convert course into a state
   // variable so we can change it
   // and force a redraw of the UI
-  
+
   const deleteCourse = (courseId: any) => {
     setCourses(courses.filter((course) => course._id !== courseId));
   };
-  
+
   //convert courses and updates them 
   const updateCourse = () => {
     setCourses(
@@ -48,17 +49,26 @@ export default function Kanbas() {
         <Routes>
           <Route path="/" element={<Navigate to="/Kanbas/Account" />} />
           <Route path="/Account/*" element={<Account />} />
-          <Route path="/Dashboard" element={<Dashboard
-              courses={courses}
-              course={course}
-              setCourse={setCourse}
-              addNewCourse={addNewCourse}
-              deleteCourse={deleteCourse}
-              updateCourse={updateCourse}/>
-} />
-          {/* <Route path="/Courses/*" element={<Courses />} /> */}
+
+          <Route path="/Dashboard" element={
+            <ProtectedRoute roles={["FACULTY"]}>
+              <Dashboard
+                courses={courses}
+                course={course}
+                setCourse={setCourse}
+                addNewCourse={addNewCourse}
+                deleteCourse={deleteCourse}
+                updateCourse={updateCourse}
+              />
+            </ProtectedRoute>} />
+
+          { }
           {/* ;cid means you have to be in a special case under courses, like a specific id to access the courses page */}
-          <Route path="/Courses/:cid/*" element={<Courses courses={courses}/>} />
+          <Route path="/Courses/:cid/*" element={
+            <ProtectedRoute>
+              <Courses courses={courses} />
+            </ProtectedRoute>
+          } />
           <Route path="/Calendar" element={<h1>Calendar</h1>} />
           <Route path="/Inbox" element={<h1>Inbox</h1>} />
         </Routes>
