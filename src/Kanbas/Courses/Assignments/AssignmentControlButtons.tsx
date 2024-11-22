@@ -1,6 +1,9 @@
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa";
 import GreenCheckmark from "./GreenCheckmark";
+import { deleteAssignment } from "./reducer";
+import { useDispatch } from "react-redux";
+import * as assignmentsClient from "./client";
 
 interface AssignmentControlButtons {
   assignmentId: string;
@@ -9,6 +12,15 @@ interface AssignmentControlButtons {
 const AssignmentControlButtons: React.FC<
   AssignmentControlButtons
 > = ({ assignmentId }) => {
+
+  const dispatch = useDispatch();
+
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
   return (
     <div className="float-end ms-auto">
       <GreenCheckmark />
@@ -20,6 +32,7 @@ const AssignmentControlButtons: React.FC<
           const modal = document.getElementById("wd-delete-assignment-dialog");
           if (modal) {
             modal.setAttribute("data-assignment-id", assignmentId);
+            removeAssignment(assignmentId)
           }
         }}
       />

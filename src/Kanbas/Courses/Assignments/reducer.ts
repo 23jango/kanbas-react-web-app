@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { assignments } from "../../Database";
+//import { assignments } from "../../Database";
 
 // create reducer's initial state with
 // default assignments copied from database
 const initialState = {
-  assignments: assignments,
+  assignments: [],
   addUpdate: false,
 };
 
@@ -14,6 +14,12 @@ const assignmentSlice = createSlice({
   name: "assignments", //name the slice
   initialState, // set initial state
   reducers: { // declare reducer functions
+
+    //so we can populate the assignments state variable when we retrieve the modules from the server.
+    setAssignments: (state, action) => {
+      state.assignments = action.payload;
+    },
+
 
     //updates for assignment editor
     toggleAddUpdate: (state, { payload: addUpdate })  => {
@@ -45,18 +51,19 @@ const assignmentSlice = createSlice({
     editAssignment: (state, { payload: assignmentId }) => {
       state.assignments = state.assignments.map((a: any) =>
         a._id === assignmentId ? { ...a, editing: true } : a
-      );
+      ) as any;
     },
 
     updateAssignment: (state, { payload: assignment }) => {
       state.assignments = state.assignments.map((a: any) =>
         a._id === assignment._id ? { ...assignment, editing: false } : a
-      );
+      ) as any;
     },
-
   }
 
 });
-export const { addAssignment, deleteAssignment, updateAssignment, editAssignment, toggleAddUpdate } =
+export const { setAssignments, addAssignment, deleteAssignment, updateAssignment, editAssignment, toggleAddUpdate } =
   assignmentSlice.actions;
 export default assignmentSlice.reducer;
+
+

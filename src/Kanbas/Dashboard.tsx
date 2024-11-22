@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import * as db from "./Database";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import EnrollmentOptions from "./Dashboardtools/EnrollmentOptions";
@@ -24,7 +23,7 @@ export default function Dashboard({
   // them as parameters
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
+  //const { enrollments } = db;
   //constant to check if faculty, then show buttons
   const isFaculty = currentUser?.role === "FACULTY";
   const [enrollment, setEnrollment] = useState(false);
@@ -95,14 +94,6 @@ export default function Dashboard({
           <div className="row row-cols-1 row-cols-md-5 g-4">
             {/* retrieving data from database... */}
             {courses
-              // filter only courses the user is enrolled in
-              .filter((course) =>
-                enrollments.some(
-                  (enrollment) =>
-                    enrollment.user === currentUser._id &&
-                    enrollment.course === course._id
-                )
-              )
               .map((course) => (
                 <div key={course._id} className="wd-dashboard-course col" style={{ width: "270px" }}>
                   <div className="card rounded-3 overflow-hidden">

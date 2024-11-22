@@ -1,15 +1,22 @@
-import * as db from "../../Database";
-import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+
 
 export default function AssignmentEditor() {
   const { aid, cid } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
+
+  const dispatch = useDispatch();
+  const saveAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
 
   const existingAssignment =
     aid !== "new" ? assignments.find((a: any) => a._id === aid) : null;
@@ -33,11 +40,12 @@ export default function AssignmentEditor() {
           title: assignment.title,
           description: assignment.description,
           points: assignment.points,
-          due: assignment.dueDate,
+          dueDate: assignment.dueDate,
           available: assignment.startDate,
           end: assignment.endDate,
         })
       );
+      saveAssignment({ ...assignment, editing: false });
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
@@ -284,7 +292,9 @@ export default function AssignmentEditor() {
           >
             Cancel
           </button>
-          <button onClick={handleSave} type="button" className="btn btn-danger">
+          <button onClick={handleSave} 
+          type="button"
+           className="btn btn-danger">
             Save
           </button>
         </div>

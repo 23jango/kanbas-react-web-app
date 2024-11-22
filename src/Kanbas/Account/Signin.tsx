@@ -1,3 +1,5 @@
+import * as client from "./client";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
@@ -10,9 +12,16 @@ export default function Signin() {
   const navigate = useNavigate();
   
   //checks database to see if user matches 
-  const signin = () => {
-    const user = db.users.find(
-      (u: any) => u.username === credentials.username && u.password === credentials.password);
+  const signin = async () => {
+
+    //this the old version- find in local database
+    // const user = db.users.find(
+    //   (u: any) => u.username === credentials.username && u.password === credentials.password);
+    // if (!user) return;
+
+    //new version of user - simpler, Clicking the Sign in button posts the credentials to the server using the client.signin function. When the server responds successfully, the currently logged in user is stored in the user reducer and navigate to the Profile screen
+    const user =  await client.signin(credentials);
+    // console.log(credentials);
     if (!user) return;
     dispatch(setCurrentUser(user));
     navigate("/Kanbas/Dashboard");
