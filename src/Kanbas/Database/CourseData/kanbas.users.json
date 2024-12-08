@@ -1,0 +1,116 @@
+[{
+  "_id": {
+    "$oid": "674e80d81147af6f39aaff0e"
+  },
+  "username": "newuser1733198040560",
+  "password": "password123",
+  "firstName": "New",
+  "email": "email9@neu.edu",
+  "lastName": "User9",
+  "role": "STUDENT",
+  "section": "S101",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674e80d91147af6f39aaff10"
+  },
+  "username": "newuser1733198041108",
+  "password": "password123",
+  "firstName": "New",
+  "email": "email10@neu.edu",
+  "lastName": "User10",
+  "role": "STUDENT",
+  "section": "S101",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6751d58b5b8542ac149e7afc"
+  },
+  "username": "dark_knight",
+  "password": "wayne123",
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "email": "bruce@wayne.com",
+  "dob": "1972-02-19",
+  "role": "FACULTY",
+  "loginId": "001234562S",
+  "section": "S101",
+  "lastActivity": "2020-11-02",
+  "totalActivity": "15:32:43"
+},
+{
+  "_id": {
+    "$oid": "6751d5ae5b8542ac149e7afd"
+  },
+  "username": "black_widow",
+  "password": "romanoff123",
+  "firstName": "Natasha",
+  "lastName": "Romanoff",
+  "email": "natasha@avengers.com",
+  "dob": "1984-11-22",
+  "role": "TA",
+  "loginId": "001234564S",
+  "section": "S101",
+  "lastActivity": "2020-11-05",
+  "totalActivity": "13:23:34"
+},
+{
+  "_id": {
+    "$oid": "6751d5f05b8542ac149e7afe"
+  },
+  "username": "thor_odinson",
+  "password": "mjolnir123",
+  "firstName": "Thor",
+  "lastName": "Odinson",
+  "email": "thor@asgard.com",
+  "dob": "982-05-25",
+  "role": "STUDENT",
+  "loginId": "001234565S",
+  "section": "S101",
+  "lastActivity": "2020-12-01",
+  "totalActivity": "11:22:33"
+},
+{
+  "_id": {
+    "$oid": "6751daae15763fa4b4f881b2"
+  },
+  "username": "newuser1733417646358",
+  "password": "password123",
+  "firstName": "New",
+  "email": "email7@neu.edu",
+  "lastName": "User7",
+  "role": "STUDENT",
+  "section": "S101",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6751daae15763fa4b4f881b4"
+  },
+  "username": "newuser1733417646957",
+  "password": "password123",
+  "firstName": "New",
+  "email": "email8@neu.edu",
+  "lastName": "User8",
+  "role": "STUDENT",
+  "section": "S101",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6751dec75b8542ac149e7b12"
+  },
+  "username": "iron_man",
+  "password": "stark123",
+  "firstName": "Tony",
+  "lastName": "Stark",
+  "email": "tony@stark.com",
+  "dob": "1970-05-29T00:00:00.000Z",
+  "role": "ADMIN",
+  "loginId": "001234561S",
+  "section": "S101",
+  "lastActivity": "2020-10-01",
+  "totalActivity": "10:21:32"
+}]

@@ -1,12 +1,34 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import {courses} from "../Database";
+//import {courses} from "../Database";
+import { useEffect, useState } from "react";
+import { fetchAllCourses, getCourseById } from "./client";
+import { useDispatch } from "react-redux";
 
 
 export default function CoursesNavigation() {
   const { cid } = useParams();
   const { pathname } = useLocation();
-  const course = courses.find((course) => course._id === cid);
- 
+  const dispatch = useDispatch();
+  const [course, setCourse] = useState<any>(null); // State to store the fetched course
+
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      if (cid) {
+        try {
+          console.log("Fetching course with ID:", cid); //testing
+          const courseData = await getCourseById(cid);
+          setCourse(courseData); // Update state with the fetched course data
+        } catch (error) {
+          console.error("Failed to fetch course:", error);
+        }
+      }
+    };
+
+    fetchCourse();
+  }, [cid]); // Re-run the effect if `cid` changes
+
+
   const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
 
   // to fix the 'course possibly not defined' error
